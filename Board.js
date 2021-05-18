@@ -8,7 +8,7 @@ class Board {
 
   }
 
-  setupPieces() {
+  setupPieces() {  //figūru vietas uz galda
     this.whitePieces.push(new King(4, 7, true));
     this.whitePieces.push(new Queen(3, 7, true));
     this.whitePieces.push(new Bishop(2, 7, true));
@@ -58,7 +58,7 @@ class Board {
     }
   }
 
-  isPieceAt(x, y) {
+  isPieceAt(x, y) {  //figūras pārbaude
     for (var i = 0; i < this.whitePieces.length; i++) {
       if (!this.whitePieces[i].taken && this.whitePieces[i].matrixPosition.x ==
         x && this.whitePieces[i].matrixPosition.y == y) {
@@ -74,7 +74,7 @@ class Board {
     return false;
   }
 
-  getPieceAt(x, y) {
+  getPieceAt(x, y) { //figūru ņemšana
     for (var i = 0; i < this.whitePieces.length; i++) {
       if (!this.whitePieces[i].taken && this.whitePieces[i].matrixPosition.x ==
         x && this.whitePieces[i].matrixPosition.y == y) {
@@ -91,7 +91,7 @@ class Board {
   }
 
 
-  generateNewBoardsWhitesTurn() {
+  generateNewBoardsWhitesTurn() { //bālta gājienu galdu ģenerēšana
     var boards = [];
     for (var i = 0; i < this.whitePieces.length; i++) {
       if (!this.whitePieces[i].taken) {
@@ -103,7 +103,7 @@ class Board {
     }
     return boards;
   }
-  generateNewBoardsBlacksTurn() {
+  generateNewBoardsBlacksTurn() { //melna gājienu galdu ģenerēšana
     var boards = [];
     for (var i = 0; i < this.blackPieces.length; i++) {
       if (!this.blackPieces[i].taken) {
@@ -122,14 +122,14 @@ class Board {
       if (!this.whitePieces[i].taken) {
         this.score -= this.whitePieces[i].value;
       } else {
-        //print("something");
+
       }
     }
     for (var i = 0; i < this.blackPieces.length; i++) {
       if (!this.blackPieces[i].taken) {
         this.score += this.blackPieces[i].value;
       } else {
-        //print("something");
+
       }
     }
 
@@ -138,12 +138,12 @@ class Board {
   move(from, to) {
     var pieceToMove = this.getPieceAt(from.x, from.y);
     if (pieceToMove == null) {
-      //print("shit");
+
       return;
     }
-    // if (pieceToMove.canMove(to.x, to.y, this)) {
+
     pieceToMove.move(to.x, to.y, this);
-    // }
+
   }
 
 

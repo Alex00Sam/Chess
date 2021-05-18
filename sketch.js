@@ -14,6 +14,7 @@ var depthPlus;
 var depthMinus;
 var tempMaxDepth = 3;
 
+//ekrāna uzstadījumi
 function setup() {
   createCanvas(800, 800);
   htmlStuff();
@@ -44,7 +45,6 @@ function runAIs() {
       if (!whitesMove) {
         if (moveCounter < 0) {
           test = maxFunAB(test, -400, 400, 0);
-          // test = maxFun(test, 0);
           print(test);
           whitesMove = true;
           moveCounter = 10;
@@ -57,10 +57,7 @@ function runAIs() {
       if (whitesMove) {
         if (moveCounter < 0) {
           test = minFunAB(test, -400, 400, 0);
-          // test = minFun(test, 0);
-
           print("test", test);
-
           whitesMove = false;
           moveCounter = 10;
         } else {
@@ -88,9 +85,6 @@ function showGrid() {
 
 }
 
-function keyPressed() {
-
-}
 
 function mousePressed() {
   var x = floor(mouseX / tileSize);
@@ -99,7 +93,6 @@ function mousePressed() {
     if (!moving) {
       movingPiece = test.getPieceAt(x, y);
       if (movingPiece != null && movingPiece.white == whitesMove) {
-
         movingPiece.movingThisPiece = true;
       } else {
         return;
@@ -155,4 +148,3 @@ function change() {
 	blackAI = !blackAI;
 
 }
-

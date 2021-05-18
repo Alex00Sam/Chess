@@ -12,48 +12,33 @@ class Piece {
     this.value = 0;
   }
 
-  //needs to extend these
+
   show() {
     if (!this.taken) {
-
-      // textSize(40);
-      // strokeWeight(5);
-      // if(this.white){
-      //   fill(255);
-      //   stroke(0);
-      // }else{
-      //   fill(30);
-      //   stroke(255);
-      // }
-      // textAlign(CENTER,CENTER);
       imageMode(CENTER);
       if (this.movingThisPiece) {
-        // text(this.letter, mouseX,mouseY);
         image(this.pic, mouseX, mouseY, tileSize * 1.5, tileSize * 1.5);
 
       } else {
-        // text(this.letter, this.pixelPosition.x,this.pixelPosition.y);
-        image(this.pic, this.pixelPosition.x, this.pixelPosition.y, tileSize,
-          tileSize);
-
+        image(this.pic, this.pixelPosition.x, this.pixelPosition.y, tileSize, tileSize);
       }
     }
   }
 
 
   generateNewBoards(currentBoard) {
-    var boards = []; //all boards created from moving this piece
-    var moves = this.generateMoves(currentBoard); //all the posible moves this piece can do ,as vectors
-    for (var i = 0; i < moves.length; i++) { //for each move
-      boards[i] = currentBoard.clone(); //create a new board
-      boards[i].move(this.matrixPosition, moves[i]); //move this piece to the mvoe location
+    var boards = []; //visi galdi, kas ir rādīti figūras pārvietošanas dēļ
+    var moves = this.generateMoves(currentBoard); //visi figūras gājieni vektora formā
+    for (var i = 0; i < moves.length; i++) { //katram gājienam
+      boards[i] = currentBoard.clone(); //klonēt galdu
+      boards[i].move(this.matrixPosition, moves[i]); //figūras pārvietošana
     }
 
     return boards;
   }
 
 
-  withinBounds(x, y) {
+  withinBounds(x, y) {           //pārbaude uz esamību galdā
 
     if (x >= 0 && y >= 0 && x < 8 && y < 8) {
       return true;
@@ -78,7 +63,7 @@ class Piece {
     var attacking = board.getPieceAt(x, y);
     if (attacking != null) {
       if (attacking.white == this.white) {
-        //if they are of the same player
+        //ja figūras ir ar vienu krāsu
         return true;
       }
     }
@@ -133,7 +118,7 @@ class King extends Piece {
     } else {
       this.pic = images[6];
     }
-    this.value = 99;
+    this.value = 99;    //figūras novērtējums (karalis ir visdargākais, lai uzvarētu spēli)
   }
 
   clone() {
@@ -190,7 +175,7 @@ class Queen extends Piece {
     } else {
       this.pic = images[7];
     }
-    this.value = 9;
+    this.value = 9;   //novērtējums
 
   }
   canMove(x, y, board) {
@@ -221,7 +206,7 @@ class Queen extends Piece {
   generateMoves(board) {
     var moves = [];
 
-    //generateHorizontal moves
+    //horizontālie gājieni
     for (var i = 0; i < 8; i++) {
       var x = i;
       var y = this.matrixPosition.y;
@@ -233,7 +218,7 @@ class Queen extends Piece {
         }
       }
     }
-    //generateVertical moves
+    //vertikālie gājieni
     for (var i = 0; i < 8; i++) {
       var x = this.matrixPosition.x;;
       var y = i;
@@ -246,7 +231,7 @@ class Queen extends Piece {
       }
     }
 
-    //generateDiagonal Moves
+    //diagonālie gājieni
     for (var i = 0; i < 8; i++) {
       var x = i;
       var y = this.matrixPosition.y - (this.matrixPosition.x - i);
@@ -274,7 +259,6 @@ class Queen extends Piece {
         }
       }
     }
-    //print("Queen", moves);
     return moves;
   }
   clone() {
@@ -307,7 +291,7 @@ class Bishop extends Piece {
     }
 
 
-    //diagonal
+    //diagonālie gājieni
     if (abs(x - this.matrixPosition.x) == abs(y - this.matrixPosition.y)) {
       if (this.moveThroughPieces(x, y, board)) {
         return false;
@@ -320,7 +304,7 @@ class Bishop extends Piece {
 
   generateMoves(board) {
     var moves = [];
-    //generateDiagonal Moves
+    //gājienu ģenerācija
     for (var i = 0; i < 8; i++) {
       var x = i;
       var y = this.matrixPosition.y - (this.matrixPosition.x - i);
@@ -348,7 +332,6 @@ class Bishop extends Piece {
         }
       }
     }
-    //print("Bishop", moves);
 
     return moves;
   }
@@ -360,6 +343,7 @@ class Bishop extends Piece {
 
   }
 }
+
 class Rook extends Piece {
   constructor(x, y, isWhite) {
     super(x, y, isWhite);
@@ -395,7 +379,7 @@ class Rook extends Piece {
   generateMoves(board) {
     var moves = [];
 
-    //generateHorizontal moves
+    //horizonālo gājienu ģenerācija
     for (var i = 0; i < 8; i++) {
       var x = i;
       var y = this.matrixPosition.y;
@@ -407,7 +391,7 @@ class Rook extends Piece {
         }
       }
     }
-    //generateVertical moves
+    //vertikālo gājienu ģenerācija
     for (var i = 0; i < 8; i++) {
       var x = this.matrixPosition.x;;
       var y = i;
@@ -419,8 +403,6 @@ class Rook extends Piece {
         }
       }
     }
-    //print("Rook", moves);
-
     return moves;
 
 
@@ -496,7 +478,6 @@ class Knight extends Piece {
         }
       }
     }
-    //print("Knight", moves);
 
     return moves;
 
@@ -533,7 +514,7 @@ class Pawn extends Piece {
     }
     var attacking = board.isPieceAt(x, y);
     if (attacking) {
-      //if attacking a player
+      //uzbrukuma gadījumā
       if (abs(x - this.matrixPosition.x) == abs(y - this.matrixPosition.y) &&
         ((this.white && (y - this.matrixPosition.y) == -1) || (!this.white &&
           (y - this.matrixPosition.y) == 1))) {
@@ -604,7 +585,6 @@ class Pawn extends Piece {
         }
       }
     }
-    //print("pawn", moves);
     return moves;
   }
   clone() {
