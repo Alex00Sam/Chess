@@ -128,6 +128,11 @@ function htmlStuff() {
 
   depthPlus.mousePressed(plusDepth);
   depthMinus.mousePressed(minusDepth);
+    createP(
+    ""
+  )
+  changeTurn = createButton('Mainīt puses');
+  changeTurn.mousePressed(change);
 
 }
 
@@ -144,3 +149,10 @@ function plusDepth() {
     depthPara.html("Domāt par " + tempMaxDepth + " soļiem uz priekšu");
   }
 }
+
+function change() {
+	whiteAI = !whiteAI;
+	blackAI = !blackAI;
+
+}
+
