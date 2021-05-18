@@ -7,7 +7,7 @@ function minFunAB(board, alpha, beta, depth) { //nogriežņa minimuma atrašana
   }
 
 
-  if (board.isDead()) {
+  if (board.isDead()) {      //punktu piešķiršana attiecīgi MI puses un pašreizēja galda iznākuma
     if (whiteAI && whitesMove) {
       return 200;
     }
@@ -16,7 +16,7 @@ function minFunAB(board, alpha, beta, depth) { //nogriežņa minimuma atrašana
     }
   }
 
-  if (board.hasWon()) {
+  if (board.hasWon()) {     //punktu piešķiršana attiecīgi MI puses un pašreizēja galda iznākuma
 
     if (whiteAI && whitesMove) {
       return -200;
@@ -26,7 +26,7 @@ function minFunAB(board, alpha, beta, depth) { //nogriežņa minimuma atrašana
     }
   }
 
-  var boards = board.generateNewBoardsWhitesTurn();
+  var boards = board.generateNewBoardsWhitesTurn(); //gājienu ģenerēšana
   var lowestBoardNo = 0;
   var lowestScore = 300;
   for (var i = 0; i < boards.length; i++) {
@@ -48,7 +48,7 @@ function minFunAB(board, alpha, beta, depth) { //nogriežņa minimuma atrašana
       return lowestScore;
     }
     if (score < beta) {
-      beta = score;
+      beta = score;          //beta nogriešana
     }
 
   }
@@ -65,7 +65,7 @@ function maxFunAB(board, alpha, beta, depth) { //nogriežņa maksimuma atrašana
     return board.score;
   }
 
-  if (board.isDead()) {
+  if (board.isDead()) {      //punktu piešķiršana attiecīgi MI puses un pašreizēja galda iznākuma
     if (whiteAI && whitesMove) {
       return 200;
     }
@@ -74,7 +74,7 @@ function maxFunAB(board, alpha, beta, depth) { //nogriežņa maksimuma atrašana
     }
   }
 
-  if (board.hasWon()) {
+  if (board.hasWon()) {    //punktu piešķiršana attiecīgi MI puses un pašreizēja galda iznākuma
     if (whiteAI && whitesMove) {
       return -200;
     }
@@ -83,7 +83,7 @@ function maxFunAB(board, alpha, beta, depth) { //nogriežņa maksimuma atrašana
     }
   }
 
-  var boards = board.generateNewBoardsBlacksTurn();
+  var boards = board.generateNewBoardsBlacksTurn(); //gājienu ģenerēšana
   if (depth == 0) {
   }
   var topBoardNo = 0;
@@ -104,7 +104,7 @@ function maxFunAB(board, alpha, beta, depth) { //nogriežņa maksimuma atrašana
     if (score > beta) {
       return topScore;
     }
-    if (score > alpha) {
+    if (score > alpha) {                   //alfa nogriešana
       alpha = score;
     }
 
